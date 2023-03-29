@@ -1,0 +1,13 @@
+12
+~kill(A,A)
+kill(A,A),kill(B,A),kill(C,A)
+hate(x,y),~kill(x,y)
+~hate(A,x),~hate(C,x)
+hate(A,A)
+hate(A,C)
+richer(x,A),hate(B,x)
+hate(B,x),~hate(A,x)
+~hate(x,A),~hate(x,B),~hate(x,C)
+~kill(x,y),~richer(x,y)
+~richer(x,y),~richer(y,x)
+~richer(x,x)
