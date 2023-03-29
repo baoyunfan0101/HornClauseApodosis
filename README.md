@@ -1,8 +1,8 @@
 # HornClauseApodosis
 
 ## 文件说明
-HornClauseApodosis.cpp // 核心算法源文件
-input.txt              // 案例输入
+HornClauseApodosis.cpp // 核心算法源文件  
+input.txt              // 案例输入  
 output.txt             // 案例输出
 
 ## 运行环境
