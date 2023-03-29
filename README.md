@@ -21,13 +21,13 @@ C++
 /* 定义文字 */
 typedef class literal {
 public:
-	bool _P;	// 正负性:true - 正,false - 负
+	bool _P;    // 正负性:true - 正,false - 负
 	int P;      // 谓词
-	vector<pair<int, bool>> VC;	// 变量/常量:true - 变量,false - 常量
+	vector<pair<int, bool>> VC; // 变量/常量:true - 变量,false - 常量
 
 	vector<int> findv();        // 找出列表项中出现的变量
-	bool operator<(literal);	// 重载"<"运算符,用于排序
-	bool operator==(literal);	// 重载"=="运算符,不考虑正负性
+	bool operator<(literal);    // 重载"<"运算符,用于排序
+	bool operator==(literal);   // 重载"=="运算符,不考虑正负性
 
 	void clear();
 	void output(string, vector<string>, vector<string>, vector<string>);
@@ -41,18 +41,18 @@ typedef class horn {
 public:
 	int id;
 
-	vector<literal> L;	// 正逻辑文字集
-	vector<literal>_L;	// 负逻辑文字集
+	vector<literal> L;  // 正逻辑文字集
+	vector<literal>_L;  // 负逻辑文字集
 
 	int F;              // 0 - 初始子句,1 - 由置换产生,2 - 由合一产生
-	substitution F1;	// 置换
-	unification F2;		// 合一
+	substitution F1;    // 置换
+	unification F2;	    // 合一
 
 	bool empty();
 	vector<int> findv();	// 找出子句中出现的变量
 	void change(int, int);	// 更换变量名,返回经过更换的变量
 	vector<horn> substitute(vector<string>);    // 定义置换运算,返回<运算结果,是否能够置换>(每次调用只会)
-	pair<horn, bool> operator+(horn);	// 定义合一运算,返回<运算结果,是否能够合一>
+	pair<horn, bool> operator+(horn);           // 定义合一运算,返回<运算结果,是否能够合一>
 	bool operator==(horn);	// 重载"=="运算符
 
 	void output(string, vector<string>, vector<string>, vector<string>);
@@ -65,9 +65,9 @@ public:
 typedef class resolution {
 public:
 	vector<horn> H;             // 子句集
-	vector<string> predicate;	// 谓词集
-	vector<string> variable;	// 变量集
-	vector<string> constant;	// 常量集
+	vector<string> predicate;   // 谓词集
+	vector<string> variable;    // 变量集
+	vector<string> constant;    // 常量集
 
 	void resolute();
 
