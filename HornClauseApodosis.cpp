@@ -1,4 +1,3 @@
-/* 1951243 °üÔÆ·« */
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -6,16 +5,16 @@
 #include<algorithm>
 using namespace std;
 
-/* ¶¨ÒåÎÄ×Ö */
+/* å®šä¹‰æ–‡å­— */
 typedef class literal {
 public:
-	bool _P;	//Õı¸ºĞÔ:true - Õı,false - ¸º
-	int P;	//Î½´Ê
-	vector<pair<int, bool>> VC;	//±äÁ¿/³£Á¿:true - ±äÁ¿,false - ³£Á¿
+	bool _P;	//æ­£è´Ÿæ€§:true - æ­£,false - è´Ÿ
+	int P;	//è°“è¯
+	vector<pair<int, bool>> VC;	//å˜é‡/å¸¸é‡:true - å˜é‡,false - å¸¸é‡
 
-	vector<int> findv();	//ÕÒ³öÁĞ±íÏîÖĞ³öÏÖµÄ±äÁ¿
-	bool operator<(literal);	//ÖØÔØ"<"ÔËËã·û,ÓÃÓÚÅÅĞò
-	bool operator==(literal);	//ÖØÔØ"=="ÔËËã·û,²»¿¼ÂÇÕı¸ºĞÔ
+	vector<int> findv();	//æ‰¾å‡ºåˆ—è¡¨é¡¹ä¸­å‡ºç°çš„å˜é‡
+	bool operator<(literal);	//é‡è½½"<"è¿ç®—ç¬¦,ç”¨äºæ’åº
+	bool operator==(literal);	//é‡è½½"=="è¿ç®—ç¬¦,ä¸è€ƒè™‘æ­£è´Ÿæ€§
 
 	void clear();
 	void output(string, vector<string>, vector<string>, vector<string>);
@@ -24,11 +23,11 @@ public:
 
 vector<int> literal::findv()
 {
-	vector<int> v;	//ÓÃÓÚ¼ÇÂ¼thisÖĞ³öÏÖµÄ±äÁ¿
+	vector<int> v;	//ç”¨äºè®°å½•thisä¸­å‡ºç°çš„å˜é‡
 	for (unsigned int i = 0; i < VC.size(); ++i)
-		if (VC[i].second) {	//·¢ÏÖ±äÁ¿
+		if (VC[i].second) {	//å‘ç°å˜é‡
 			vector<int>::iterator it = find(v.begin(), v.end(), VC[i].first);
-			if (it == v.end())	//vÖĞÉĞ²»´æÔÚ¸Ã±äÁ¿
+			if (it == v.end())	//vä¸­å°šä¸å­˜åœ¨è¯¥å˜é‡
 				v.push_back(VC[i].first);
 		}
 	return v;
@@ -36,7 +35,7 @@ vector<int> literal::findv()
 
 bool literal::operator<(literal u)
 {
-	if (P == u.P) {	//ÏÈ±ÈP,È»ºó±ÈVC.size()
+	if (P == u.P) {	//å…ˆæ¯”P,ç„¶åæ¯”VC.size()
 		if (VC.size() != u.VC.size())
 			return VC.size() < u.VC.size();
 		unsigned int i = 0;
@@ -61,19 +60,19 @@ bool literal::operator==(literal u)
 		if (VC[i].second != u.VC[i].second
 			|| (!VC[i].second && !u.VC[i].second && VC[i].first != u.VC[i].first))
 			return false;
-		else if (VC[i].second && u.VC[i].second) {	//¶¼ÊÇ±äÁ¿
+		else if (VC[i].second && u.VC[i].second) {	//éƒ½æ˜¯å˜é‡
 			if (VC[i].first == u.VC[i].first)
 				exist.push_back(VC[i].first);
 			else {
 				vector<int>::iterator it1 = find(exist.begin(), exist.end(), VC[i].first);
 				vector<int>::iterator it2 = find(exist.begin(), exist.end(), u.VC[i].first);
-				if (it1 == exist.end() && it2 == exist.end()) {	//¸Ã±äÁ¿ÉĞÎ´³öÏÖ¹ı,¿ÉÒÔ³¢ÊÔÌæ»»
+				if (it1 == exist.end() && it2 == exist.end()) {	//è¯¥å˜é‡å°šæœªå‡ºç°è¿‡,å¯ä»¥å°è¯•æ›¿æ¢
 					int temp = u.VC[i].first;
 					for (unsigned int j = 0; j < u.VC.size(); ++j)
 						if (u.VC[j].second && u.VC[j].first == temp)
 							u.VC[j].first = VC[i].first;
 						else if (u.VC[j].second && u.VC[j].first == VC[j].first) {
-							static int m = 0;	//ÕÒ³öÒ»¸öthisºÍuÖĞ¶¼Î´³öÏÖµÄ±äÁ¿m
+							static int m = 0;	//æ‰¾å‡ºä¸€ä¸ªthiså’Œuä¸­éƒ½æœªå‡ºç°çš„å˜é‡m
 							vector<int> t1 = findv();
 							vector<int> t2 = u.findv();
 							while (1) {
@@ -104,7 +103,7 @@ void literal::output(string outfile,
 	vector<string> variable,
 	vector<string> constant)
 {
-	ofstream out(outfile, ios::app);	//½«½á¹ûĞ´ÈëÎÄ¼ş
+	ofstream out(outfile, ios::app);	//å°†ç»“æœå†™å…¥æ–‡ä»¶
 	if (out.is_open()) {
 		if (!_P)
 			out << "~";
@@ -139,7 +138,7 @@ void literal::output(vector<string> predicate,
 	cout << ")";
 }
 
-/* ¶¨ÒåÖÃ»» */
+/* å®šä¹‰ç½®æ¢ */
 typedef class substitution {
 public:
 	int father;
@@ -147,31 +146,31 @@ public:
 	int c;
 }substitution;
 
-/* ¶¨ÒåºÏÒ» */
+/* å®šä¹‰åˆä¸€ */
 typedef class unification {
 public:
 	int father1;
 	int father2;
 }unification;
 
-/* ¶¨Òå×Ó¾ä */
+/* å®šä¹‰å­å¥ */
 typedef class horn {
 public:
 	int id;
 
-	vector<literal> L;	//ÕıÂß¼­ÎÄ×Ö¼¯
-	vector<literal>_L;	//¸ºÂß¼­ÎÄ×Ö¼¯
+	vector<literal> L;	//æ­£é€»è¾‘æ–‡å­—é›†
+	vector<literal>_L;	//è´Ÿé€»è¾‘æ–‡å­—é›†
 
-	int F;	//0 - ³õÊ¼×Ó¾ä,1 - ÓÉÖÃ»»²úÉú,2 - ÓÉºÏÒ»²úÉú
-	substitution F1;	//ÖÃ»»
-	unification F2;		//ºÏÒ»
+	int F;	//0 - åˆå§‹å­å¥,1 - ç”±ç½®æ¢äº§ç”Ÿ,2 - ç”±åˆä¸€äº§ç”Ÿ
+	substitution F1;	//ç½®æ¢
+	unification F2;		//åˆä¸€
 
 	bool empty();
-	vector<int> findv();	//ÕÒ³ö×Ó¾äÖĞ³öÏÖµÄ±äÁ¿
-	void change(int, int);	//¸ü»»±äÁ¿Ãû,·µ»Ø¾­¹ı¸ü»»µÄ±äÁ¿
-	vector<horn> substitute(vector<string>);		//¶¨ÒåÖÃ»»ÔËËã,·µ»Ø<ÔËËã½á¹û,ÊÇ·ñÄÜ¹»ÖÃ»»>(Ã¿´Îµ÷ÓÃÖ»»á)
-	pair<horn, bool> operator+(horn);	//¶¨ÒåºÏÒ»ÔËËã,·µ»Ø<ÔËËã½á¹û,ÊÇ·ñÄÜ¹»ºÏÒ»>
-	bool operator==(horn);	//ÖØÔØ"=="ÔËËã·û
+	vector<int> findv();	//æ‰¾å‡ºå­å¥ä¸­å‡ºç°çš„å˜é‡
+	void change(int, int);	//æ›´æ¢å˜é‡å,è¿”å›ç»è¿‡æ›´æ¢çš„å˜é‡
+	vector<horn> substitute(vector<string>);		//å®šä¹‰ç½®æ¢è¿ç®—,è¿”å›<è¿ç®—ç»“æœ,æ˜¯å¦èƒ½å¤Ÿç½®æ¢>(æ¯æ¬¡è°ƒç”¨åªä¼š)
+	pair<horn, bool> operator+(horn);	//å®šä¹‰åˆä¸€è¿ç®—,è¿”å›<è¿ç®—ç»“æœ,æ˜¯å¦èƒ½å¤Ÿåˆä¸€>
+	bool operator==(horn);	//é‡è½½"=="è¿ç®—ç¬¦
 
 	void output(string, vector<string>, vector<string>, vector<string>);
 	void output(vector<string>, vector<string>, vector<string>);
@@ -184,52 +183,52 @@ bool horn::empty()
 
 vector<int> horn::findv()
 {
-	vector<int> v;	//ÓÃÓÚ¼ÇÂ¼thisÖĞ³öÏÖµÄ±äÁ¿
+	vector<int> v;	//ç”¨äºè®°å½•thisä¸­å‡ºç°çš„å˜é‡
 	for (unsigned int i = 0; i < L.size(); ++i) {
 		for (unsigned int j = 0; j < L[i].VC.size(); ++j)
-			if (L[i].VC[j].second) {	//·¢ÏÖ±äÁ¿
+			if (L[i].VC[j].second) {	//å‘ç°å˜é‡
 				vector<int>::iterator it = find(v.begin(), v.end(), L[i].VC[j].first);
-				if (it == v.end())	//vÖĞÉĞ²»´æÔÚ¸Ã±äÁ¿
+				if (it == v.end())	//vä¸­å°šä¸å­˜åœ¨è¯¥å˜é‡
 					v.push_back(L[i].VC[j].first);
 			}
 	}
 	for (unsigned int i = 0; i < _L.size(); ++i) {
 		for (unsigned int j = 0; j < _L[i].VC.size(); ++j)
-			if (_L[i].VC[j].second) {	//·¢ÏÖ±äÁ¿
+			if (_L[i].VC[j].second) {	//å‘ç°å˜é‡
 				vector<int>::iterator it = find(v.begin(), v.end(), _L[i].VC[j].first);
-				if (it == v.end())	//vÖĞÉĞ²»´æÔÚ¸Ã±äÁ¿
+				if (it == v.end())	//vä¸­å°šä¸å­˜åœ¨è¯¥å˜é‡
 					v.push_back(_L[i].VC[j].first);
 			}
 	}
 	return v;
 }
 
-void horn::change(int a, int b)	//±äÁ¿a->±äÁ¿b
+void horn::change(int a, int b)	//å˜é‡a->å˜é‡b
 {
-	/*vector<int> v = findv();	//ÕÒ³öthisÖĞ³öÏÖµÄ±äÁ¿
+	/*vector<int> v = findv();	//æ‰¾å‡ºthisä¸­å‡ºç°çš„å˜é‡
 	vector<int>::iterator it = find(v.begin(), v.end(), b);
-	if (it != v.end()) {	//bÒÑ¾­ÊÇ×Ó¾äÖĞ´æÔÚµÄ±äÁ¿
+	if (it != v.end()) {	//bå·²ç»æ˜¯å­å¥ä¸­å­˜åœ¨çš„å˜é‡
 		int c = 0;
-		while (1) {	//ÕÒ³öÒ»¸öthisÖĞÎ´³öÏÖµÄ±äÁ¿c
+		while (1) {	//æ‰¾å‡ºä¸€ä¸ªthisä¸­æœªå‡ºç°çš„å˜é‡c
 			vector<int>::iterator it = find(v.begin(), v.end(), c);
 			if (it == v.end())
 				break;
 			c++;
 		}
-		change(b, c);	//ÏÈ½«b¸ü»»Îªc
+		change(b, c);	//å…ˆå°†bæ›´æ¢ä¸ºc
 	}*/
 	for (unsigned int i = 0; i < L.size(); ++i) {
 		for (unsigned int j = 0; j < L[i].VC.size(); ++j)
-			if (L[i].VC[j].second && L[i].VC[j].first == a)	//·¢ÏÖ±äÁ¿a
+			if (L[i].VC[j].second && L[i].VC[j].first == a)	//å‘ç°å˜é‡a
 				L[i].VC[j].first = b;
-			else if (L[i].VC[j].second && L[i].VC[j].first == b)	//·¢ÏÖ±äÁ¿b
+			else if (L[i].VC[j].second && L[i].VC[j].first == b)	//å‘ç°å˜é‡b
 				L[i].VC[j].first = a;
 	}
 	for (unsigned int i = 0; i < _L.size(); ++i) {
 		for (unsigned int j = 0; j < _L[i].VC.size(); ++j)
-			if (_L[i].VC[j].second && _L[i].VC[j].first == a)	//·¢ÏÖ±äÁ¿a
+			if (_L[i].VC[j].second && _L[i].VC[j].first == a)	//å‘ç°å˜é‡a
 				_L[i].VC[j].first = b;
-			else if (_L[i].VC[j].second && _L[i].VC[j].first == b)	//·¢ÏÖ±äÁ¿b
+			else if (_L[i].VC[j].second && _L[i].VC[j].first == b)	//å‘ç°å˜é‡b
 				_L[i].VC[j].first = a;
 	}
 	return;
@@ -238,21 +237,21 @@ void horn::change(int a, int b)	//±äÁ¿a->±äÁ¿b
 vector<horn> horn::substitute(vector<string> constant)
 {
 	vector<horn> res;
-	vector<int> v = findv();	//ÕÒ³öthisÖĞ³öÏÖµÄ±äÁ¿
-	if (!v.empty()) {	//×Ó¾äthisÖĞÓĞ±äÁ¿
-		for (unsigned int l = 0; l < v.size(); ++l)	//Ã¿¸ö¿ÉÒÔ±»ÖÃ»»µÄ±äÁ¿
-			for (unsigned int k = 0; k < constant.size(); ++k) {	//Ã¿ÖÖ¿ÉÄÜµÄÖÃ»»
+	vector<int> v = findv();	//æ‰¾å‡ºthisä¸­å‡ºç°çš„å˜é‡
+	if (!v.empty()) {	//å­å¥thisä¸­æœ‰å˜é‡
+		for (unsigned int l = 0; l < v.size(); ++l)	//æ¯ä¸ªå¯ä»¥è¢«ç½®æ¢çš„å˜é‡
+			for (unsigned int k = 0; k < constant.size(); ++k) {	//æ¯ç§å¯èƒ½çš„ç½®æ¢
 				horn temp(*this);
 				for (unsigned int i = 0; i < temp.L.size(); ++i) {
 					for (unsigned int j = 0; j < temp.L[i].VC.size(); ++j)
-						if (temp.L[i].VC[j].second && temp.L[i].VC[j].first == v[l]) {	//·¢ÏÖ±äÁ¿v[l]
+						if (temp.L[i].VC[j].second && temp.L[i].VC[j].first == v[l]) {	//å‘ç°å˜é‡v[l]
 							temp.L[i].VC[j].second = false;
 							temp.L[i].VC[j].first = k;
 						}
 				}
 				for (unsigned int i = 0; i < temp._L.size(); ++i) {
 					for (unsigned int j = 0; j < temp._L[i].VC.size(); ++j)
-						if (temp._L[i].VC[j].second && temp._L[i].VC[j].first == v[l]) {	//·¢ÏÖ±äÁ¿v[l]
+						if (temp._L[i].VC[j].second && temp._L[i].VC[j].first == v[l]) {	//å‘ç°å˜é‡v[l]
 							temp._L[i].VC[j].second = false;
 							temp._L[i].VC[j].first = k;
 						}
@@ -271,34 +270,34 @@ pair<horn, bool> horn::operator+(horn u)
 {
 	horn t(*this);
 	bool judge = false;
-	for (unsigned int i = 0; i < u.L.size() && !judge; ++i) {	//uµÄÕıÎÄ×ÖÊÇ·ñÓë*thisµÄ¸ºÎÄ×ÖÓĞÖØºÏ
+	for (unsigned int i = 0; i < u.L.size() && !judge; ++i) {	//uçš„æ­£æ–‡å­—æ˜¯å¦ä¸*thisçš„è´Ÿæ–‡å­—æœ‰é‡åˆ
 		for (unsigned int j = 0; j < t._L.size() && !judge; ++j)
 			if (u.L[i] == t._L[j]) {
 				for (unsigned int k = 0; k < u.L[i].VC.size(); ++k)
 					if (u.L[i].VC[k].second == true && t._L[j].VC[k].second == true
-						&& u.L[i].VC[k].first != t._L[j].VC[k].first) {	//±äÁ¿Ãû²»Í¬
+						&& u.L[i].VC[k].first != t._L[j].VC[k].first) {	//å˜é‡åä¸åŒ
 						u.change(u.L[i].VC[k].first, t._L[j].VC[k].first);
 					}
-				u.L.erase(u.L.begin() + i);		//u²¢·ÇÒıÓÃ,ÕâÀï¶ÔuµÄĞŞ¸Ä²»»áÓ°ÏìÊµ²Î
+				u.L.erase(u.L.begin() + i);		//uå¹¶éå¼•ç”¨,è¿™é‡Œå¯¹uçš„ä¿®æ”¹ä¸ä¼šå½±å“å®å‚
 				t._L.erase(t._L.begin() + j);
 				judge = true;
 			}
 	}
-	for (unsigned int i = 0; i < u._L.size() && !judge; ++i)	//uµÄ¸ºÎÄ×ÖÊÇ·ñÓë*thisµÄÕıÎÄ×ÖÓĞÖØºÏ
+	for (unsigned int i = 0; i < u._L.size() && !judge; ++i)	//uçš„è´Ÿæ–‡å­—æ˜¯å¦ä¸*thisçš„æ­£æ–‡å­—æœ‰é‡åˆ
 		for (unsigned int j = 0; j < t.L.size() && !judge; ++j)
 			if (u._L[i] == t.L[j]) {
 				for (unsigned int k = 0; k < u._L[i].VC.size(); ++k)
 					if (u._L[i].VC[k].second == true && t.L[j].VC[k].second == true
-						&& u._L[i].VC[k].first != t.L[j].VC[k].first) {	//±äÁ¿Ãû²»Í¬
+						&& u._L[i].VC[k].first != t.L[j].VC[k].first) {	//å˜é‡åä¸åŒ
 						u.change(u._L[i].VC[k].first, t.L[j].VC[k].first);
 					}
-				u._L.erase(u._L.begin() + i);	//u²¢·ÇÒıÓÃ,ÕâÀï¶ÔuµÄĞŞ¸Ä²»»áÓ°ÏìÊµ²Î
+				u._L.erase(u._L.begin() + i);	//uå¹¶éå¼•ç”¨,è¿™é‡Œå¯¹uçš„ä¿®æ”¹ä¸ä¼šå½±å“å®å‚
 				t.L.erase(t.L.begin() + j);
 				judge = true;
 			}
 	pair<horn, bool> res;
 	horn temp;
-	if (!judge)	//ÎŞ·¨ºÏÒ»(ºÏÒ»Ã»ÓĞÒâÒå)
+	if (!judge)	//æ— æ³•åˆä¸€(åˆä¸€æ²¡æœ‰æ„ä¹‰)
 		res.second = false;
 	else {
 		for (unsigned int i = 0; i < t.L.size(); ++i)
@@ -336,7 +335,7 @@ void horn::output(string outfile,
 	vector<string> variable,
 	vector<string> constant)
 {
-	ofstream out(outfile, ios::app);	//½«½á¹ûĞ´ÈëÎÄ¼ş
+	ofstream out(outfile, ios::app);	//å°†ç»“æœå†™å…¥æ–‡ä»¶
 	if (out.is_open()) {
 		for (unsigned int i = 0; i < L.size(); ++i) {
 			if (i != 0)
@@ -366,13 +365,13 @@ void horn::output(vector<string> predicate,
 	}
 }
 
-/* ¶¨Òå¹é½á */
+/* å®šä¹‰å½’ç»“ */
 typedef class resolution {
 public:
-	vector<horn> H;	//×Ó¾ä¼¯
-	vector<string> predicate;	//Î½´Ê¼¯
-	vector<string> variable;	//±äÁ¿¼¯
-	vector<string> constant;	//³£Á¿¼¯
+	vector<horn> H;	//å­å¥é›†
+	vector<string> predicate;	//è°“è¯é›†
+	vector<string> variable;	//å˜é‡é›†
+	vector<string> constant;	//å¸¸é‡é›†
 
 	void resolute();
 
@@ -383,7 +382,7 @@ public:
 
 void resolution::resolute()
 {
-	cout << "¿ªÊ¼¹é½á:" << endl;
+	cout << "å¼€å§‹å½’ç»“:" << endl;
 	for (unsigned int now = 0; now < H.size(); ++now) {
 		cout << now << ":\t";
 		H[now].output(predicate, variable, constant);
@@ -400,16 +399,16 @@ void resolution::resolute()
 			break;
 		}
 
-		/* ³¢ÊÔ¹é½áH[now]ÓëH[i](i=0,..,(now-1)) */
+		/* å°è¯•å½’ç»“H[now]ä¸H[i](i=0,..,(now-1)) */
 		for (unsigned int i = 0; i < now; ++i) {
 			pair<horn, bool> temp;
 			temp = H[i] + H[now];
-			if (!temp.second)	//ºÏÒ»Ê§°Ü
+			if (!temp.second)	//åˆä¸€å¤±è´¥
 				continue;
 			sort(temp.first.L.begin(), temp.first.L.end());
 			sort(temp.first._L.begin(), temp.first._L.end());
 			vector<horn>::iterator it = find(H.begin(), H.end(), temp.first);
-			if (it != H.end())	//ÒÑ¾­´æÔÚÖØ¸´×Ó¾ä
+			if (it != H.end())	//å·²ç»å­˜åœ¨é‡å¤å­å¥
 				continue;
 			temp.first.id = H.size();
 			temp.first.F = 2;
@@ -419,49 +418,49 @@ void resolution::resolute()
 			temp.first.output(predicate, variable, constant);
 			cout << endl;*/
 			H.push_back(temp.first);
-			if (temp.first.empty()) {	//³É¹¦µ¼³ö¿ÕÓï¾ä
-				cout << endl << endl << "Çó½â¹ı³Ì:" << endl;
-				output_res(H.size() - 1);	//Êä³ö½á¹û
+			if (temp.first.empty()) {	//æˆåŠŸå¯¼å‡ºç©ºè¯­å¥
+				cout << endl << endl << "æ±‚è§£è¿‡ç¨‹:" << endl;
+				output_res(H.size() - 1);	//è¾“å‡ºç»“æœ
 				return;
 			}
 		}
 
-		/* ³¢ÊÔH[now]ËùÓĞ¿ÉÄÜµÄÖÃ»» */
+		/* å°è¯•H[now]æ‰€æœ‰å¯èƒ½çš„ç½®æ¢ */
 		vector<horn> temp = H[now].substitute(constant);
 		for (unsigned int i = 0; i < temp.size(); ++i) {
 			vector<horn>::iterator it = find(H.begin(), H.end(), temp[i]);
-			if (it != H.end())	//ÒÑ¾­´æÔÚÖØ¸´×Ó¾ä
+			if (it != H.end())	//å·²ç»å­˜åœ¨é‡å¤å­å¥
 				continue;
 			temp[i].id = H.size();
 			H.push_back(temp[i]);
 		}
 	}
-	cout << "¹é½áÊ§°Ü" << endl;
+	cout << "å½’ç»“å¤±è´¥" << endl;
 }
 
 void resolution::input()
 {
-	ifstream in("input.txt");	//´ÓÎÄ¼şÖĞ¶ÁÈëÊı¾İ
+	ifstream in("input.txt");	//ä»æ–‡ä»¶ä¸­è¯»å…¥æ•°æ®
 	if (in.is_open()) {
 		int n;
 		in >> n;
 		while (in.get() != '\n')
 			;
 
-		/* ¶ÁÈën¸ö×Ó¾ä */
+		/* è¯»å…¥nä¸ªå­å¥ */
 		for (int i = 0; i < n; ++i) {
 			horn h;
-			h.F = 0;	//±ê¼ÇÎª³õÊ¼×Ó¾ä
+			h.F = 0;	//æ ‡è®°ä¸ºåˆå§‹å­å¥
 			string s;
 			getline(in, s);
 			int now = 0, len = s.size();
 
-			/* ¶ÁÈë1¸ö×Ó¾ä */
+			/* è¯»å…¥1ä¸ªå­å¥ */
 			literal t;
 			while (now < len) {
 				if (s[now] != ' ') {
 					string word;
-					while (now < len) {	//¶ÁÈëÒ»¸öµ¥´Ê
+					while (now < len) {	//è¯»å…¥ä¸€ä¸ªå•è¯
 						if (s[now] == '(' || s[now] == ')' || s[now] == ',')
 							break;
 						if (s[now] != ' ')
@@ -469,55 +468,55 @@ void resolution::input()
 						now++;
 					}
 					if (word.length() != 0)
-						if (s[now] != '(') {	//wordÎª±äÁ¿or³£Á¿
+						if (s[now] != '(') {	//wordä¸ºå˜é‡orå¸¸é‡
 							pair<int, bool> vc;
-							if (word[0] == 'x' || word[0] == 'y' || word[0] == 'z') {	//wordÎª±äÁ¿(ÒÔ'x'/'y'/'z'¿ªÍ·)
+							if (word[0] == 'x' || word[0] == 'y' || word[0] == 'z') {	//wordä¸ºå˜é‡(ä»¥'x'/'y'/'z'å¼€å¤´)
 								vc.second = true;
 								vector<string>::iterator it = find(variable.begin(), variable.end(), word);
-								if (it != variable.end())	//ÒÑ¾­´æÔÚÏàÍ¬±äÁ¿
+								if (it != variable.end())	//å·²ç»å­˜åœ¨ç›¸åŒå˜é‡
 									vc.first = it - variable.begin();
-								else {	//²»´æÔÚÏàÍ¬±äÁ¿
+								else {	//ä¸å­˜åœ¨ç›¸åŒå˜é‡
 									vc.first = variable.size();
 									variable.push_back(word);
 								}
 								t.VC.push_back(vc);
 							}
-							else {	//wordÎª³£Á¿
+							else {	//wordä¸ºå¸¸é‡
 								vc.second = false;
 								vector<string>::iterator it = find(constant.begin(), constant.end(), word);
-								if (it != constant.end())	//ÒÑ¾­´æÔÚÏàÍ¬±äÁ¿
+								if (it != constant.end())	//å·²ç»å­˜åœ¨ç›¸åŒå˜é‡
 									vc.first = it - constant.begin();
-								else {	//²»´æÔÚÏàÍ¬±äÁ¿
+								else {	//ä¸å­˜åœ¨ç›¸åŒå˜é‡
 									vc.first = constant.size();
 									constant.push_back(word);
 								}
 								t.VC.push_back(vc);
 							}
 						}
-						else {	//wordÎªÎ½´Ê·ûºÅ
-							if (word[0] != '~') {	//wordÎªÕıÎÄ×Ö
+						else {	//wordä¸ºè°“è¯ç¬¦å·
+							if (word[0] != '~') {	//wordä¸ºæ­£æ–‡å­—
 								t._P = true;
 								vector<string>::iterator it = find(predicate.begin(), predicate.end(), word);
-								if (it != predicate.end())	//ÒÑ¾­´æÔÚÏàÍ¬Î½´Ê
+								if (it != predicate.end())	//å·²ç»å­˜åœ¨ç›¸åŒè°“è¯
 									t.P = it - predicate.begin();
-								else {	//²»´æÔÚÏàÍ¬Î½´Ê
+								else {	//ä¸å­˜åœ¨ç›¸åŒè°“è¯
 									t.P = predicate.size();
 									predicate.push_back(word);
 								}
 							}
-							else {	//wordÎª¸ºÎÄ×Ö
+							else {	//wordä¸ºè´Ÿæ–‡å­—
 								word.erase(0, 1);
 								t._P = false;
 								vector<string>::iterator it = find(predicate.begin(), predicate.end(), word);
-								if (it != predicate.end())	//ÒÑ¾­´æÔÚÏàÍ¬Î½´Ê
+								if (it != predicate.end())	//å·²ç»å­˜åœ¨ç›¸åŒè°“è¯
 									t.P = it - predicate.begin();
-								else {	//²»´æÔÚÏàÍ¬Î½´Ê
+								else {	//ä¸å­˜åœ¨ç›¸åŒè°“è¯
 									t.P = predicate.size();
 									predicate.push_back(word);
 								}
 							}
 						}
-					if (s[now] == ')') {	//1¸öÎÄ×ÖÊäÈë½áÊø
+					if (s[now] == ')') {	//1ä¸ªæ–‡å­—è¾“å…¥ç»“æŸ
 						if (t._P)
 							h.L.push_back(t);
 						else
@@ -549,12 +548,12 @@ void resolution::output()
 void resolution::output_res(int head)
 {
 	switch (H[head].F) {
-	case 0:	//³õÊ¼×Ó¾ä
+	case 0:	//åˆå§‹å­å¥
 		cout << "(" << head << ")\t";
 		H[head].output(predicate, variable, constant);
 		cout << endl;
 		break;
-	case 1: {	//ÓÉÖÃ»»²úÉú
+	case 1: {	//ç”±ç½®æ¢äº§ç”Ÿ
 		vector<pair<int, int>> t;
 		int k = head;
 		while (H[k].F == 1) {
@@ -576,7 +575,7 @@ void resolution::output_res(int head)
 		cout << "}" << endl;
 		break;
 	}
-	case 2:	//ÓÉºÏÒ»²úÉú
+	case 2:	//ç”±åˆä¸€äº§ç”Ÿ
 		output_res(H[head].F2.father1);
 		output_res(H[head].F2.father2);
 		cout << "(" << head << ")\t";
@@ -590,7 +589,7 @@ int main()
 {
 	resolution r;
 	r.input();
-	cout << "¸ø¶¨ÊÂÊµÈçÏÂ:" << endl;
+	cout << "ç»™å®šäº‹å®å¦‚ä¸‹:" << endl;
 	r.output();
 	cout << endl << endl;
 
