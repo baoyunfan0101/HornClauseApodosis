@@ -1,4 +1,4 @@
-# HornClauseApodosis
+# Horn Clause Apodosis
 
 ## 文件说明
 HornClauseApodosis.cpp // 核心算法源文件  
